@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Expense Dialog</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="saveExpense()" [formGroup]="expenseForm">
+    <ion-row class="row-spacing">
+      <ion-col>
+        <ion-item id="rounded">
+          <ion-label>Type</ion-label>
+          <ion-select formControlName="type" value="brown" okText="Okay" cancelText="Dismiss">
+            <ion-select-option value="expense">Expense</ion-select-option>
+            <ion-select-option value="income">Income</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item id="rounded">
+          <ion-label>Desc</ion-label>
+          <ion-input type="text" formControlName="desc" placeholder="Description" required></ion-input>
+        </ion-item>
+
+        <ion-item id="rounded">
+          <ion-label>Amount</ion-label>
+          <ion-input type="number" formControlName="amount" placeholder="Amount" required></ion-input>
+        </ion-item>
+
+        <ion-item id="rounded">
+          <ion-label>Expense Date</ion-label>
+          <ion-datetime formControlName="expDate" displayFormat="DD/MM/YYYY" ></ion-datetime>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <div class="text-align-left">
+        <ion-button class="submit-btn" full type="submit" [disabled]="!expenseForm.valid">Register</ion-button>
+      </div>
+      <div class="text-align-right">
+        <ion-button (click)="dismiss()" full type="button">Dismiss</ion-button>
+      </div>
+    </ion-row>
+
+  </form>
+</ion-content>

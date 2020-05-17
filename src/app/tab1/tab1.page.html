@@ -1,17 +1,103 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Statistics
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- fab placed to the top end -->
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="presentModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-item color="danger">
+    <span><strong>Add </strong>Expense + Income</span>
+  </ion-item>
+  <div>
+    <ion-card class="welcome-card">
+      <ion-card-content>
+        <div id="highcharts" style="width:100%; height:250px;"></div>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-item>
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button (click)="expenseType('t1')" [ngClass]="highTab=='t1' ? 'tab-selected' : ''">
+          <ion-icon name="albums-outline"></ion-icon>
+          <ion-label>Both</ion-label>
+          <ion-badge>6</ion-badge>
+        </ion-tab-button>
+    
+        <ion-tab-button (click)="expenseType('t2')" [ngClass]="highTab=='t2' ? 'tab-selected' : ''">
+          <ion-icon name="wallet-outline"></ion-icon>
+          <ion-label>Expense</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button (click)="expenseType('t3')" [ngClass]="highTab=='t3' ? 'tab-selected' : ''">
+          <ion-icon name="cash-outline"></ion-icon>
+          <ion-label>Income</ion-label>
+        </ion-tab-button>
+    
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-item>
+
+  <ion-virtual-scroll class="scroll-style" [items]="bothEandIList">
+    <ion-item *virtualItem="let item">
+      <div *ngIf="item.type=='expense'">
+        <ion-grid class="grid-size">
+          <ion-row>
+            <ion-col size="1">
+              <ion-icon class="text-color-expense" name="reader-outline"></ion-icon>
+            </ion-col>
+            <ion-col size="2">
+              <ion-text>{{ setDate(item.date) | date:"MMM dd" }}</ion-text>
+            </ion-col>
+            <ion-col size="4">
+              <span><strong>{{ item.desc }}</strong></span>
+            </ion-col>
+            <ion-col size="3">
+              <span class="text-color-expense">{{ item.amount | currency:'INR'}}</span>
+            </ion-col>
+            <ion-col size="0.75">
+              <ion-icon (click)="editItem(item)" color="dark" name="create-outline"></ion-icon>
+            </ion-col>
+            <ion-col size="0.75">
+              <ion-icon (click)="deleteItem(item)" color="danger" name="trash-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <div *ngIf="item.type=='income'">
+        <ion-grid class="grid-size">
+          <ion-row>
+            <ion-col size="1">
+              <ion-icon class="text-color-income" name="logo-usd"></ion-icon>
+            </ion-col>
+            <ion-col size="2">
+              <ion-text>{{ setDate(item.date) | date:"MMM dd" }}</ion-text>
+            </ion-col>
+            <ion-col size="4">
+              <span><strong>{{ item.desc }}</strong></span>
+            </ion-col>
+            <ion-col size="3">
+              <span class="text-color-income">{{ item.amount | currency:'INR'}}</span>
+            </ion-col>
+            <ion-col size="0.75">
+              <ion-icon (click)="editItem(item)" color="dark" name="create-outline"></ion-icon>
+            </ion-col>
+            <ion-col size="0.75">
+              <ion-icon (click)="deleteItem(item)" color="danger" name="trash-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-item>
+  </ion-virtual-scroll>
+
 </ion-content>

@@ -1,0 +1,150 @@
+.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+  }
+  
+  .animated.infinite {
+    animation-iteration-count: infinite;
+  }
+  
+  .animated.hinge {
+    animation-duration: 2s;
+  }
+  
+  .animated.flipOutX,
+  .animated.flipOutY,
+  .animated.bounceIn,
+  .animated.bounceOut {
+    animation-duration: .75s;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .fadeIn {
+    animation-name: fadeIn;
+  }
+  
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translate3d(0, -100%, 0);
+    }
+  
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  
+  .fadeInDown {
+    animation-name: fadeInDown;
+  }
+
+
+  .text-primary {
+    color: color(primary);
+  }
+
+  // buttons configs
+  .btn-facebook {
+    background-color: #3B5999 !important;
+  }
+  
+  .btn-twitter {
+    background-color: #00ACEE !important;
+  }
+  
+  .btn-gplus {
+    background-color: #E04006 !important;
+  }
+
+  .text-align-center {
+      text-align: center !important;
+  }
+
+  .text-align-right {
+    text-align: right !important;
+    margin-right: 10px !important;
+}
+
+
+.auth-page {
+    background-color: #fff;
+    &::after {
+      background: url("/assets/img/img/bg.jpg") no-repeat;
+      background-size: cover;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      position: absolute;
+      z-index: 0;
+    }
+  
+    .scroll-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      //background: rgba(50, 10, 92, .4);
+  
+      .login-content {
+        width: 86%;
+  
+        .list-form {
+          padding: 0;
+          margin-bottom: 0;
+  
+          ion-item {
+            background: none;
+            padding: 0;
+  
+            &:first-child {
+              border-top: none;
+            }
+  
+            &:after {
+              display: none;
+            }
+  
+            ion-label {
+              font-size: 1em;
+              color: color(primary);
+            }
+  
+            input {
+              color: color(primary);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  ion-content{
+    --background: #fff url('/assets/img/img/bg.jpg') no-repeat center center / cover;
+  }
+
+  .logo {
+    width: 150px;
+    height: 150px;
+    margin: 20px auto 0;
+    border-radius: 10%;
+    background: url("/assets/img/img/company-logo.png") no-repeat;
+    background-size: 100%;
+  }
+
+  .content-margin {
+      margin-left: 20px;
+      margin-right: 20px;
+  }
+
+
+  

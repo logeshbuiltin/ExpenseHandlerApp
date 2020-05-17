@@ -1,0 +1,62 @@
+<!--
+  Generated template for the RegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registration</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div class="logo">
+  </div>
+  <form (ngSubmit)="register()" [formGroup]="registerForm">
+    <ion-item>
+      <ion-input type="text" formControlName="firstName" placeholder="FirstName" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text" formControlName="lastName" placeholder="LastName" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="text" formControlName="emailId" placeholder="Email" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="password" formControlName="password" placeholder="Password" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="password" formControlName="confirm_password" placeholder="Confirm Password" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input type="number" formControlName="phoneNo" placeholder="Phone No" name="phoneNo" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Currency</ion-label>
+      <ion-select formControlName="currencyCode" value="brown" okText="Okay" cancelText="Dismiss">
+        <ion-select-option value="hkd">HKD (Hongkong Dollar)</ion-select-option>
+        <ion-select-option value="usd">USD (US Dollar)</ion-select-option>
+        <ion-select-option value="inr">INR (Indian Rupees)</ion-select-option>
+        <ion-select-option value="myr">MYR (Malaysian Ringgit)</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+      <ion-row class="text-align-center">
+        <ion-col class="signup-col">
+          <ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.valid">Register</ion-button>
+        </ion-col>
+      </ion-row>
+
+    </form>
+</ion-content>

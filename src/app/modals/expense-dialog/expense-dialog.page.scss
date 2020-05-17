@@ -1,0 +1,39 @@
+.logo {
+    width: 80px;
+    height: 80px;
+    margin: 20px auto 0;
+    border-radius: 10%;
+    background: url("/assets/img/img/company-logo.png") no-repeat;
+    background-size: 100%;
+}
+
+ion-content{
+    --background: #fff url('/assets/img/img/bg.jpg') no-repeat center center / cover;
+}
+
+.text-align-right {
+    text-align: right !important;
+    margin-left: 30% !important;
+    margin-top: 10px;
+}
+
+.text-align-left {
+    text-align: left !important;
+    margin-left: 4% !important;
+    margin-top: 10px;
+}
+
+
+#rounded {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border-color: black;
+    background-color: grey;  
+}
+
+.row-spacing {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}

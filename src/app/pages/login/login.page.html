@@ -1,0 +1,80 @@
+<!-- -->
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <strong>Expense</strong> Handler
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="animated fadeIn login app-background">
+
+  <div class="logo">
+  </div>
+
+  <div class="content-margin">
+     <!-- Login form -->
+    <form class="list-form">
+      <ion-item text-center>
+        <ion-label floating>
+          <ion-icon name="mail-outline" item-start color="primary"></ion-icon>
+          Email
+        </ion-label>
+        <ion-input type="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="lock-closed-outline" item-start color="primary"></ion-icon>
+          Password
+        </ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+    </form>
+
+    <ion-text class="text-align-right" padding color="black" tappable (click)="forgotPass()">
+      <p>Forgot Password?</p>
+    </ion-text>
+
+    <div class="text-align-center">
+      <ion-button icon-start block color="dark" tappable (click)="login()">
+        <ion-icon name="log-in"></ion-icon>
+        SIGN IN
+      </ion-button>
+
+      <ion-text class="text-align-center" color="tertiary">
+        <p>Or Sign in with:</p>
+      </ion-text>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+            <ion-button expand="block" icon-only block color="dark-shade" class="btn-facebook">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col col-4>
+            <ion-button expand="block" icon-only block color="primary" class="btn-twitter">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col col-4>
+            <ion-button expand="block" icon-only block color="danger" class="btn-gplus">
+              <ion-icon name="logo-google"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </div>
+
+
+    <!-- Other links -->
+    <div class="text-align-center" margin-top>
+      <ion-text color="tertiary" tappable>
+        <a href='/register'><span>New here? <strong>Sign up</strong></span></a>
+      </ion-text>
+    </div>
+  </div>
+</ion-content>

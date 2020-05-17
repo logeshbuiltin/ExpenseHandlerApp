@@ -1,17 +1,47 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Reports
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content padding>
+  <ion-item color="danger">
+    <ion-label position="stacked">Select Month</ion-label>
+    <ion-datetime displayFormat="MMM YYYY" min="2020-01-01" max="2020-12-30" value="2020-12-15T13:47:20.789">
+    </ion-datetime>
+    <ion-icon class="cal-icon-style" name="calendar-outline"></ion-icon>
+  </ion-item>
+  
+  <div>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  	<!-- 
+  	   Embed the ngx-datatable component with following property bindings/values:
+       1. sorttype - allow data to be sorted on multiple columns
+       2. headerHeight - Set height of table header at 50 pixels
+       3. footerHeight - Set height of table footer at 50 pixels
+       4. rowHeight - Set height of table rows at 50 pixels
+       5. rows - Derives the data for the table rows from the component class 
+                 property of rows
+       6. columns - Derives the names for the table columns from the component 
+                    class property of columns
+       7. columnMode - Use of standard, flex or force - Force value makes columns 
+                       equidistant and span the width of the parent container
+       8. limit - the number of records to display before paginating the results
+  	-->
+     <ngx-datatable 
+       class="material"
+       [sortType]="'multi'"     
+       [headerHeight]="50" 
+       [footerHeight]="50"
+       [rowHeight]="45"
+       [rows]="rows" 
+       [columns]="columns" 
+       [columnMode]="'force'"
+       [limit]="10">
+     </ngx-datatable>
+  </div>
+
+
 </ion-content>

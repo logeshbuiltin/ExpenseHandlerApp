@@ -1,7 +1,8 @@
 {
   "name": "ExpenseHandler",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }

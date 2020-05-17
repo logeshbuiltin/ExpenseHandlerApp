@@ -1,17 +1,60 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 3
+      User Info
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="logo">
+    <ion-icon class="icon-size" name="person-outline"></ion-icon>
+  </div>
+  <ion-item>
+    <ion-input type="text" placeholder="UserName" name="userName" required></ion-input>
+  </ion-item>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <ion-item>
+    <ion-input type="text" placeholder="FirstName" name="firstName" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input type="text" placeholder="LastName" name="lastName" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input type="text" placeholder="Email" name="email" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input type="password" placeholder="Password" name="password" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input type="number" placeholder="Phone No" name="phoneNo" required></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Currency</ion-label>
+    <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+      <ion-select-option value="hkd">HKD (Hongkong Dollar)</ion-select-option>
+      <ion-select-option value="usd">USD (US Dollar)</ion-select-option>
+      <ion-select-option value="inr">INR (Indian Rupees)</ion-select-option>
+      <ion-select-option value="myr">MYR (Malaysian Ringgit)</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-row class="text-align-center">
+    <ion-col class="signup-col">
+      <ion-button class="submit-btn">Edit</ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row class="text-align-center">
+    <ion-col class="signup-col">
+      <ion-button href="/login" color="dark" >
+         Logout
+         <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
 </ion-content>
