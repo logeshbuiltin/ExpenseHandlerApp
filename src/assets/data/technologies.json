@@ -1,79 +1,134 @@
 {
-    "technologies" : [
+   "items": [
        {
-          "name" : "Ionic Framework",
-          "summary" : "Hybrid application development framework",
-          "company" : "Drifty"
+           "id": 1,
+           "purchaseType": "expense",
+           "entryAmount": 2000,
+           "description": "Vegetables",
+           "purchaseDate": "2020-05-21T00:00:00",
+           "purchaseDay": "Sat",
+           "addedBy": "self",
+           "userId": 1
        },
        {
-          "name" : "Angular",
-          "summary" : "Front-end development framework",
-          "company" : "Google"
+           "id": 2,
+           "purchaseType": "expense",
+           "entryAmount": 2000,
+           "description": "Dinner",
+           "purchaseDate": "2020-05-03T00:00:00",
+           "purchaseDay": "Mon",
+           "addedBy": "self",
+           "userId": 1
        },
        {
-          "name" : "TypeScript",
-          "summary" : "Superset of JavaScript",
-          "company" : "Microsoft"
+           "id": 3,
+           "purchaseType": "expense",
+           "entryAmount": 2000,
+           "description": "Lunch",
+           "purchaseDate": "2020-05-02T00:00:00",
+           "purchaseDay": "Sun",
+           "addedBy": "self",
+           "userId": 1
        },
        {
-          "name" : "Apache Cordova",
-          "summary" : "Native application development framework",
-          "company" : "Apache"
+           "id": 4,
+           "purchaseType": "expense",
+           "entryAmount": 2000,
+           "description": "Fuel",
+           "purchaseDate": "2020-05-13T00:00:00",
+           "purchaseDay": "Wed",
+           "addedBy": "self",
+           "userId": 1
        },
        {
-          "name" : "Ionic Native",
-          "summary" : "Apache Cordova compatible plugins",
-          "company" : "Drifty"
+           "id": 5,
+           "purchaseType": "expense",
+           "entryAmount": 6000,
+           "description": "Party",
+           "purchaseDate": "2020-05-18T00:00:00",
+           "purchaseDay": "Wed",
+           "addedBy": "self",
+           "userId": 1
        },
        {
-          "name" : "HTML5",
-          "summary" : "Mark-up language and API's",
-          "company" : "W3C"
+           "id": 6,
+           "purchaseType": "expense",
+           "entryAmount": 500,
+           "description": "Dinner",
+           "purchaseDate": "2020-05-20T00:00:00",
+           "purchaseDay": "Thu",
+           "addedBy": "self",
+           "userId": 1
        },
        {
-          "name" : "Sass",
-          "summary" : "CSS pre-processor",
-          "company" : "W3C"
+           "id": 7,
+           "purchaseType": "income",
+           "entryAmount": 5000,
+           "description": "salary",
+           "purchaseDate": "2020-05-01T00:00:00",
+           "purchaseDay": "Fri",
+           "addedBy": "self",
+           "userId": 1
        },
        {
-          "name" : "Ionic CLI",
-          "summary" : "The engine behind the framework",
-          "company" : "Drifty"
+           "id": 8,
+           "purchaseType": "income",
+           "entryAmount": 5000,
+           "description": "Friend",
+           "purchaseDate": "2020-05-15T00:00:00",
+           "purchaseDay": "Fri",
+           "addedBy": "self",
+           "userId": 1
        },
        {
-          "name" : "Stencil",
-          "summary" : "Web component generator",
-          "company" : "Drifty"
-       },
-       {
-          "name" : "Firebase",
-          "summary" : "Backend as a Service (BaaS)",
-          "company" : "Firebase/Google"
-       },
-       {
-          "name" : "MongoDB",
-          "summary" : "NoSQL database solution",
-          "company" : "Mongo"
-       },
-       {
-          "name" : "PHP",
-          "summary" : "Server-side scripting language",
-          "company" : "Zend"
-       },
-       {
-          "name" : "MySQL",
-          "summary" : "Popular open-source database",
-          "company" : "Oracle"
-       },
-       {
-          "name" : "PouchDB",
-          "summary" : "Client-side NoSQL database abstraction solution",
-          "company" : "PouchDB"
-       },
-       {
-          "name" : "CouchDB",
-          "summary" : "Server-side NoSQL database solution",
-          "company" : "CouchDB"
-       }
-    ]
- }
+         "id": 4,
+         "purchaseType": "expense",
+         "entryAmount": 2000,
+         "description": "Fuel",
+         "purchaseDate": "2020-05-13T00:00:00",
+         "purchaseDay": "Wed",
+         "addedBy": "self",
+         "userId": 1
+     },
+     {
+         "id": 5,
+         "purchaseType": "expense",
+         "entryAmount": 6000,
+         "description": "Party",
+         "purchaseDate": "2020-05-18T00:00:00",
+         "purchaseDay": "Wed",
+         "addedBy": "self",
+         "userId": 1
+     },
+     {
+         "id": 6,
+         "purchaseType": "expense",
+         "entryAmount": 500,
+         "description": "Dinner",
+         "purchaseDate": "2020-05-20T00:00:00",
+         "purchaseDay": "Thu",
+         "addedBy": "self",
+         "userId": 1
+     },
+     {
+         "id": 7,
+         "purchaseType": "income",
+         "entryAmount": 5000,
+         "description": "salary",
+         "purchaseDate": "2020-05-01T00:00:00",
+         "purchaseDay": "Fri",
+         "addedBy": "self",
+         "userId": 1
+     },
+     {
+         "id": 8,
+         "purchaseType": "income",
+         "entryAmount": 5000,
+         "description": "Friend",
+         "purchaseDate": "2020-05-15T00:00:00",
+         "purchaseDay": "Fri",
+         "addedBy": "self",
+         "userId": 1
+     }
+   ]
+}

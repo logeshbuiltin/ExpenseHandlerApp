@@ -27,7 +27,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-input type="text" formControlName="emailId" placeholder="Email" required></ion-input>
+      <ion-input type="email" formControlName="emailId" placeholder="Email" required></ion-input>
     </ion-item>
 
     <ion-item>
@@ -45,18 +45,23 @@
     <ion-item>
       <ion-label>Currency</ion-label>
       <ion-select formControlName="currencyCode" value="brown" okText="Okay" cancelText="Dismiss">
-        <ion-select-option value="hkd">HKD (Hongkong Dollar)</ion-select-option>
-        <ion-select-option value="usd">USD (US Dollar)</ion-select-option>
-        <ion-select-option value="inr">INR (Indian Rupees)</ion-select-option>
-        <ion-select-option value="myr">MYR (Malaysian Ringgit)</ion-select-option>
+        <ion-select-option value="HKD">HKD (Hongkong Dollar)</ion-select-option>
+        <ion-select-option value="USD">USD (US Dollar)</ion-select-option>
+        <ion-select-option value="INR">INR (Indian Rupees)</ion-select-option>
+        <ion-select-option value="MYR">MYR (Malaysian Ringgit)</ion-select-option>
       </ion-select>
     </ion-item>
 
-      <ion-row class="text-align-center">
-        <ion-col class="signup-col">
-          <ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.valid">Register</ion-button>
-        </ion-col>
-      </ion-row>
+    <ion-item>
+      <ion-text style="margin-right: 10px;">What is your favorite?</ion-text>
+      <ion-input type="text" formControlName="security" placeholder="Security answer" name="security" required></ion-input>
+    </ion-item>
 
-    </form>
+    <ion-row class="text-align-center">
+      <ion-col class="signup-col">
+        <ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.valid">Register</ion-button>
+      </ion-col>
+    </ion-row>
+
+  </form>
 </ion-content>

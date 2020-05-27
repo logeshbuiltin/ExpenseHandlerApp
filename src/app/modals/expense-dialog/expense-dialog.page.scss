@@ -13,7 +13,7 @@ ion-content{
 
 .text-align-right {
     text-align: right !important;
-    margin-left: 30% !important;
+    margin-left: 37% !important;
     margin-top: 10px;
 }
 
@@ -36,4 +36,17 @@ ion-content{
     margin-top: 20px;
     margin-left: 10px;
     margin-right: 10px;
+}
+
+.text-field-align {
+    text-align: right;
+}
+
+.curr-field {
+    color: red;
+    width: 50% !important;
+}
+
+.cur-select {
+    margin-left: -15px;
 }

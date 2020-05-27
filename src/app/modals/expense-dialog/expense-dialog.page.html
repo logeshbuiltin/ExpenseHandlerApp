@@ -5,44 +5,57 @@
         <ion-icon name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Expense Dialog</ion-title>
+    <ion-title>{{titleName}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form (ngSubmit)="saveExpense()" [formGroup]="expenseForm">
+  <form (ngSubmit)="performSave(expenseForm.value)" [formGroup]="expenseForm">
     <ion-row class="row-spacing">
       <ion-col>
         <ion-item id="rounded">
-          <ion-label>Type</ion-label>
-          <ion-select formControlName="type" value="brown" okText="Okay" cancelText="Dismiss">
+          <ion-label>Type: </ion-label>
+          <ion-select [(ngModel)]="type" formControlName="type" interface="popover">
             <ion-select-option value="expense">Expense</ion-select-option>
             <ion-select-option value="income">Income</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item id="rounded">
-          <ion-label>Desc</ion-label>
-          <ion-input type="text" formControlName="desc" placeholder="Description" required></ion-input>
+          <ion-label>Desc: </ion-label>
+          <ion-input class="text-field-align" type="text" [(ngModel)]="desc" formControlName="desc" placeholder="Description" required></ion-input>
         </ion-item>
 
         <ion-item id="rounded">
-          <ion-label>Amount</ion-label>
-          <ion-input type="number" formControlName="amount" placeholder="Amount" required></ion-input>
+          <ion-select class="cur-select" formControlName="currCode" [(ngModel)]="currCode" [disabled]="isDisabled" value="brown" okText="Okay" cancelText="Dismiss">
+            <ion-select-option value="HKD">HKD</ion-select-option>
+            <ion-select-option value="USD">USD</ion-select-option>
+            <ion-select-option value="INR">INR</ion-select-option>
+            <ion-select-option value="MYR">MYR</ion-select-option>
+          </ion-select>
+          <ion-input class="text-field-align" type="number" [(ngModel)]="amount" formControlName="amount" placeholder="Amount" required></ion-input>
         </ion-item>
 
         <ion-item id="rounded">
-          <ion-label>Expense Date</ion-label>
-          <ion-datetime formControlName="expDate" displayFormat="DD/MM/YYYY" ></ion-datetime>
+          <ion-label>Expense Date: </ion-label>
+          <ion-datetime formControlName="expDate" [(ngModel)]="expDate" displayFormat="DD/MM/YYYY"></ion-datetime>
         </ion-item>
       </ion-col>
+
+      <ion-item id="rounded">
+        <ion-label>Added by: </ion-label>
+        <ion-select formControlName="addedBy" [(ngModel)]="addedBy" interface="popover">
+          <ion-select-option value="self">self</ion-select-option>
+          <ion-select-option value="others">Others</ion-select-option>
+        </ion-select>
+      </ion-item>
     </ion-row>
 
     <ion-row>
       <div class="text-align-left">
-        <ion-button class="submit-btn" full type="submit" [disabled]="!expenseForm.valid">Register</ion-button>
+        <ion-button (click)="dismiss()" full type="button">Dismiss</ion-button>
       </div>
       <div class="text-align-right">
-        <ion-button (click)="dismiss()" full type="button">Dismiss</ion-button>
+        <ion-button class="submit-btn" full type="submit" [disabled]="!expenseForm.valid">{{dynamicSave}}</ion-button>
       </div>
     </ion-row>
 

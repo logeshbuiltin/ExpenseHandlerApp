@@ -15,35 +15,49 @@
 
   <div class="content-margin">
      <!-- Login form -->
-    <form class="list-form">
+    <div class="list-form">
       <ion-item text-center>
         <ion-label floating>
           <ion-icon name="mail-outline" item-start color="primary"></ion-icon>
           Email
         </ion-label>
-        <ion-input type="email"></ion-input>
+        <ion-input [(ngModel)]="username" type="email"></ion-input>
       </ion-item>
 
-      <ion-item>
+      <ion-item *ngIf="forgetPass">
+        <ion-text style="margin-right: 10px;">What is your favorite?</ion-text>
+        <ion-input type="text"  [(ngModel)]="security" placeholder="Security answer" name="security"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="!forgetPass">
         <ion-label floating>
           <ion-icon name="lock-closed-outline" item-start color="primary"></ion-icon>
           Password
         </ion-label>
-        <ion-input type="password"></ion-input>
+        <ion-input [(ngModel)]="password" type="password"></ion-input>
       </ion-item>
-    </form>
+    </div>
 
-    <ion-text class="text-align-right" padding color="black" tappable (click)="forgotPass()">
+    <ion-text *ngIf="!forgetPass" class="text-align-right" padding color="black" tappable (click)="forgotPass()">
       <p>Forgot Password?</p>
     </ion-text>
 
-    <div class="text-align-center">
+    <div *ngIf="forgetPass" class="text-align-center">
+      <ion-button style="margin-right: 20px;" icon-start block color="dark" tappable (click)="cancelpass()">
+        cancel
+      </ion-button>
+      <ion-button icon-start block color="dark" tappable (click)="sendPass()">
+        confirm
+      </ion-button>
+    </div>
+
+    <div *ngIf="!forgetPass" class="text-align-center">
       <ion-button icon-start block color="dark" tappable (click)="login()">
         <ion-icon name="log-in"></ion-icon>
         SIGN IN
       </ion-button>
 
-      <ion-text class="text-align-center" color="tertiary">
+      <!-- <ion-text class="text-align-center" color="tertiary">
         <p>Or Sign in with:</p>
       </ion-text>
 
@@ -65,7 +79,7 @@
             </ion-button>
           </ion-col>
         </ion-row>
-      </ion-grid>
+      </ion-grid> -->
 
     </div>
 

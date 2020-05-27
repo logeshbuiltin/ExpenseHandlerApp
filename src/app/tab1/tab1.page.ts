@@ -1,65 +1,109 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController, ModalController, ToastController } from '@ionic/angular';
 import * as HighCharts from 'highcharts';
 import { ExpenseDialogPage } from '../modals/expense-dialog/expense-dialog.page';
+import { Storage } from '@ionic/storage';
+import { DatePipe } from '@angular/common';
+import { DataServiceProvider } from '../providers/data-service';
 
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  styleUrls: ['tab1.page.scss'],
+  providers: [DatePipe, DataServiceProvider]
 })
 export class Tab1Page {
 
   expenseData: any[] = [];
   incomeData: any[] = [];
   daysData: any[] = [];
+  totalRecords: any[] = [];
   expenseList: any[] = [];
   incomeList: any[] = [];
   bothEandIList: any[] = [];
-
+  userId: any;
   highTab: string = "t1";
 
-  currentMonth: string = "Jan 2020";
+  totalBatch: number;
+  expenseBatch: number;
+  incomeBatch: number;
+
+  currentDate: Date = new Date();
+  startDate: any;
+  endDate: any;
+  currentMonth: string;
+
+  //total amount
+  totalSavings: number = 0;
+  totalExpense: number = 0;
+  totalIncome: number = 0;
+
+  myCurrency: string;
 
   constructor(
     public nav: NavController,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private storage: Storage,
+    private datepipe: DatePipe,
+    private dataService: DataServiceProvider,
+    private toastController: ToastController
   ) {}
 
 
   ionViewDidEnter(): void {
+    this.getUserDetails();
     this.daysData = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    this.getExpenses(this.highTab);
+  }
+  
+  getUserDetails() {
+    this.currentMonth = this.datepipe.transform(this.currentDate, "MMM yyyy");
+    let y = this.currentDate.getFullYear(), m = this.currentDate.getMonth();
+    this.startDate = this.datepipe.transform(new Date(y, m, 1), "yyyy-MM-dd");
+    this.endDate = this.datepipe.transform(new Date(y, m+1, 0), "yyyy-MM-dd");
+    this.storage.ready().then(() => {
+      this.storage.get('currCode').then((val) => {
+        this.myCurrency = val;
+      });
+      this.getExpenseData();
+    }).catch((error: Error) => {
+      console.error(error);
+      return;
+    });
   }
 
   getExpenseData() {
-    this.expenseList = [
-      {id: 1, desc: "Fuel", day: "Mon", amount: 2500.00, type: "expense", date:'2020-04-05'}, 
-      {id: 2, desc: "Dinner", day: "Tue", amount: 500.00, type: "expense", date:'2020-04-07'}, 
-      {id: 4, desc: "Shopping", day: "Wed", amount: 6500.00, type: "expense", date:'2020-04-08'},
-      {id: 5, desc: "Travel", day: "Fri", amount: 1000.00, type: "expense", date:'2020-04-09'},
-      {id: 6, desc: "Lunch", day: "Wed", amount: 2500.00, type: "expense", date:'2020-04-10'},
-    ];
-    this.incomeList = [
-      {id: 3, desc: "Return", day: "Mon", amount: 10500.00, type: "income", date:'2020-04-06'}, 
-      {id: 7, desc: "Loan", day: "Tue", amount: 500.00, type: "income", date:'2020-04-09'}, 
-      {id: 8, desc: "Income", day: "Wed", amount: 2500.00, type: "income", date:'2020-04-30'},
-      {id: 9, desc: "Salary", day: "Thu", amount: 6500.00, type: "income", date:'2020-04-29'},
-      {id: 10, desc: "Claim", day: "Fri", amount: 1000.00, type: "income", date:'2020-04-07'},
-    ];
-    this.bothEandIList = [
-      {id: 1, desc: "Income", day: "Wed", amount: 5500.00, type: "income", date:'2020-04-05'},
-      {id: 2, desc: "Fuel", day: "Mon", amount: 2500.00, type: "expense",date:'2020-04-05'}, 
-      {id: 3, desc: "Dinner", day: "Tue", amount: 500.00, type: "expense",date:'2020-04-05'}, 
-      {id: 4, desc: "Return", day: "Mon", amount: 10500.00, type: "income", date:'2020-04-05'},
-      {id: 5, desc: "Shopping", day: "Wed", amount: 6500.00, type: "expense", date:'2020-04-05'},
-      {id: 6, desc: "Travel", day: "Fri", amount: 1000.00, type: "expense", date:'2020-04-05'},
-      {id: 7, desc: "Income", day: "Wed", amount: 2500.00, type: "income",date:'2020-04-05'},
-      {id: 8, desc: "Lunch", day: "Wed", amount: 2500.00, type: "expense", date:'2020-04-05'},
-      {id: 9, desc: "Salary", day: "Thu", amount: 6500.00, type: "income", date:'2020-04-05'},
-      {id: 10, desc: "Claim", day: "Fri", amount: 1000.00, type: "income", date:'2020-04-05'},
-    ];
+    this.storage.get('userId').then((val) => {
+      this.userId = val;
+      if(this.userId) {
+        this.totalRecords = [];
+        this.dataService.dateFilter(this.startDate, this.endDate, this.userId).subscribe(allowed => {
+          if (allowed) {
+            if(allowed.items.length > 0) {
+              allowed.items.forEach(element => {
+                const data = {
+                  id: element.id,
+                  desc: element.description,
+                  day: element.purchaseDay,
+                  amount: element.entryAmount,
+                  type: element.purchaseType,
+                  date: new Date(element.purchaseDate),
+                  currCode: element.currCode,
+                  addedBy: element.addedBy
+                }
+                this.totalRecords.push(data);
+              });
+            } 
+            this.getExpenses(this.highTab);
+          } else {
+            this.toastError("Error" ,"Unable to fetch records for the selected Month.");
+          }
+        },
+        error => {
+          this.toastError("Error ",error);
+        });
+      } 
+    });
   }
 
   expenseType(tabType) {
@@ -78,39 +122,67 @@ export class Tab1Page {
   }
 
   getExpenses(tabType) {
-    this.getExpenseData();
     let chartData = [];
     if(tabType == 't1') {
-      this.expenseList = [];
-      this.incomeList = [];
-      this.bothEandIList.forEach(element => {
-        if(element.type == "expense") {
-          this.expenseList.push(element);
-        } else {
-          this.incomeList.push(element);
-        }
-      });
-      this.expenseData = this.calculateGraph('e');
-      this.incomeData = this.calculateGraph('i');
-      chartData = this.getChartData(this.expenseData, this.incomeData);
+      chartData = this.updateAllData();
     } else if(tabType == 't2'){
-      this.bothEandIList = [];
-      this.expenseList.forEach(element => {
-        this.bothEandIList.push(element);
-      });
-      this.incomeData = [];
-      this.expenseData = this.calculateGraph('e');
-      chartData = this.getChartData(this.expenseData, []);
+      chartData = this.updateExpenseData();
     } else if(tabType == 't3') {
-      this.bothEandIList = [];
-      this.incomeList.forEach(element => {
-        this.bothEandIList.push(element);
-      });
-      this.expenseData = [];
-      this.incomeData = this.calculateGraph('i');
-      chartData = this.getChartData([], this.incomeList);
+      chartData = this.updateIncomeDate();
     }
+    this.updateBatch();
     this.viewChartEnter(chartData);
+  }
+
+  updateBatch() {
+    this.totalBatch = this.totalRecords.length;
+    this.expenseBatch = this.expenseList.length;
+    this.incomeBatch = this.incomeList.length;
+  }
+
+  updateIncomeDate(): any[] {
+    this.clearList();
+    this.updateEandIData();
+    this.bothEandIList = this.incomeList;
+    this.incomeData = this.calculateGraph('i');
+    return this.getChartData([], this.incomeData);
+  }
+
+  updateExpenseData(): any[] {
+    this.clearList();
+    this.updateEandIData();
+    this.bothEandIList = this.expenseList;
+    this.expenseData = this.calculateGraph('e');
+    return this.getChartData(this.expenseData, []);
+  }
+
+  updateAllData() {
+    this.clearList();
+    this.updateEandIData();
+    this.bothEandIList = this.totalRecords;
+    this.expenseData = this.calculateGraph('e');
+    this.incomeData = this.calculateGraph('i');
+    return this.getChartData(this.expenseData, this.incomeData);
+  }
+
+  updateEandIData() {
+    this.totalRecords.forEach(element => {
+      if(element.type == 'expense') {
+        this.expenseList.push(element);
+        this.totalExpense += element.amount;
+      } 
+      else if(element.type == 'income'){
+        this.incomeList.push(element);
+        this.totalIncome += element.amount;
+      }
+    });
+    this.totalSavings = this.totalIncome - this.totalExpense;
+  }
+
+  clearList() {
+    this.bothEandIList = [];
+    this.expenseList = [];
+    this.incomeList = [];
   }
 
 
@@ -148,7 +220,7 @@ export class Tab1Page {
     let dataList = [];
     if(type == "e") {
       dataList = this.expenseList;
-    } else {
+    } else if (type == "i"){
       dataList = this.incomeList;
     }
     let listData = [];
@@ -180,25 +252,25 @@ export class Tab1Page {
     return listData = [dSun, dMon, dTue, dWed, dThu, dFri, dSat];
   }
 
-  loadData(event) {
-    setTimeout(() => {
-      console.log('Done');
-      event.target.complete();
-
-      // App logic to determine if all data is loaded
-      // and disable the infinite scroll
-      // if (data.length == 1000) {
-      //   event.target.disabled = true;
-      // }
-    }, 500);
-  }
 
   editItem(item) {
-    console.log("edited");
+    this.presentEditModal(item);
   }
 
   deleteItem(item) {
-    console.log("deleted");
+    this.dataService.deleteExpense(item.id).subscribe(allowed => {
+      if (allowed) {
+        if(allowed.item == "Deleted Successfully") {
+          this.toastError("Success",  "Item has been deleted.");
+          this.getExpenseData();
+        }
+      } else {
+        this.toastError("Error","Unable to delete the item.");
+      }
+    },
+    error => {
+      this.toastError("Error",error);
+    });
   }
 
   async presentModal() {
@@ -206,7 +278,37 @@ export class Tab1Page {
       component: ExpenseDialogPage,
       cssClass: 'my-custom-modal-css',
       swipeToClose: true,
+      componentProps: {expenseData: "", opType: "save"},
       presentingElement: await this.modalController.getTop()
+    });
+    modal.onWillDismiss().then(dataReturned => {
+      // trigger when about to close the modal
+      this.getExpenseData();
+    });
+    return await modal.present();
+  }
+
+  async presentEditModal(item) {
+    let expenseData = {
+      id: item.id,
+      purchaseType: item.type,
+      entryAmount: item.amount,
+      description: item.desc,
+      purchaseDate: item.date,
+      purchaseDay: item.day,
+      addedBy: item.addedBy,
+      userId: this.userId
+    };
+    const modal = await this.modalController.create({
+      component: ExpenseDialogPage,
+      cssClass: 'my-custom-modal-css',
+      swipeToClose: true,
+      componentProps: {expenseData: expenseData, opType: "update"},
+      presentingElement: await this.modalController.getTop()
+    });
+    modal.onWillDismiss().then(dataReturned => {
+      // trigger when about to close the modal
+      this.getExpenseData();
     });
     return await modal.present();
   }
@@ -236,5 +338,32 @@ export class Tab1Page {
       },
       series: chartData
     });
+  }
+
+  loadData(event) {
+    setTimeout(() => {
+      console.log('Done');
+      event.target.complete();
+
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+      // if (data.length == 1000) {
+      //   event.target.disabled = true;
+      // }
+    }, 500);
+  }
+
+  switchTab2(){
+    this.nav.navigateForward("/tab2");
+  }
+
+  async toastError(type,text) {
+    const toast = await this.toastController.create({
+      header: type,
+      message: text,
+      duration: 3000,
+      position: 'top',
+    });
+    toast.present();
   }
 }

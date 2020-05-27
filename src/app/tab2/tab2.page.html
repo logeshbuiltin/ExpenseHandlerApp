@@ -9,7 +9,7 @@
 <ion-content padding>
   <ion-item color="danger">
     <ion-label position="stacked">Select Month</ion-label>
-    <ion-datetime displayFormat="MMM YYYY" min="2020-01-01" max="2020-12-30" value="2020-12-15T13:47:20.789">
+    <ion-datetime (ionChange)="monthChange($event.detail)" displayFormat="MMM YYYY" min={{minDate}} max={{maxDate}} value={{currentDate}}>
     </ion-datetime>
     <ion-icon class="cal-icon-style" name="calendar-outline"></ion-icon>
   </ion-item>
