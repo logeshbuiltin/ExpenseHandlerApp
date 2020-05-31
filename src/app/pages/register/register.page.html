@@ -27,19 +27,19 @@
     </ion-item>
 
     <ion-item>
-      <ion-input type="email" formControlName="emailId" placeholder="Email" required></ion-input>
+      <ion-input type="email" [(ngModel)]="emailId" formControlName="emailId" placeholder="Email" required></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-input type="password" formControlName="password" placeholder="Password" required></ion-input>
+      <ion-input type="password" [(ngModel)]="passwordMod" (focusout)="checkValidity('password')" formControlName="password" placeholder="Password - should be min 8 characters" required></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-input type="password" formControlName="confirm_password" placeholder="Confirm Password" required></ion-input>
+      <ion-input type="password" [(ngModel)]="cPasswordMod" (focusout)="checkPassword()" formControlName="confirm_password" placeholder="Confirm Password" required></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-input type="number" formControlName="phoneNo" placeholder="Phone No" name="phoneNo" required></ion-input>
+      <ion-input type="number" [(ngModel)]="phoneNo" (focusout)="checkValidity('number')" formControlName="phoneNo" placeholder="Phone No" name="phoneNo" required></ion-input>
     </ion-item>
 
     <ion-item>

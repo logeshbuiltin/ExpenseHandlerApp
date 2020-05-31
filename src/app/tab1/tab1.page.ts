@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavController, ModalController, ToastController } from '@ionic/angular';
+import { NavController, ModalController, ToastController, AlertController, Platform } from '@ionic/angular';
 import * as HighCharts from 'highcharts';
 import { ExpenseDialogPage } from '../modals/expense-dialog/expense-dialog.page';
 import { Storage } from '@ionic/storage';
@@ -47,8 +47,14 @@ export class Tab1Page {
     private storage: Storage,
     private datepipe: DatePipe,
     private dataService: DataServiceProvider,
-    private toastController: ToastController
-  ) {}
+    private toastController: ToastController,
+    public alertController: AlertController,
+    private platform: Platform
+  ) {
+    this.platform.backButton.subscribeWithPriority(10, () => {
+      navigator['app'].exitApp();
+    });
+  }
 
 
   ionViewDidEnter(): void {
@@ -180,6 +186,9 @@ export class Tab1Page {
   }
 
   clearList() {
+    this.totalIncome = 0;
+    this.totalExpense = 0;
+    this.totalSavings = 0;
     this.bothEandIList = [];
     this.expenseList = [];
     this.incomeList = [];
@@ -227,25 +236,25 @@ export class Tab1Page {
     dataList.forEach(element => {
       switch (element.day) {
       case 'Mon': 
-        dMon =+ element.amount;
+        dMon = dMon + element.amount;
         break; 
       case 'Tue':
-        dTue =+ element.amount;
+        dTue = dTue + element.amount;
         break; 
       case 'Wed':
-        dWed =+ element.amount;
+        dWed = dWed + element.amount;
         break; 
       case 'Thu':
-        dThu =+ element.amount; 
+        dThu = dThu + element.amount; 
         break; 
       case 'Fri':
-        dFri =+ element.amount; 
+        dFri = dFri + element.amount; 
         break; 
       case 'Sat': 
-        dSat =+ element.amount;
+        dSat = dSat + element.amount;
         break; 
       case 'Sun':
-        dSun =+ element.amount; 
+        dSun = dSun + element.amount; 
         break; 
       }
     });
@@ -258,6 +267,26 @@ export class Tab1Page {
   }
 
   deleteItem(item) {
+    this.presentAlertMultipleButtons(item);
+  }
+
+  async presentAlertMultipleButtons(item) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Alert',
+      subHeader: 'Do you want to delete the item?',
+      message: 'Press delete or cancel to discard.',
+      buttons: ['Cancel', {text: 'Delete', role: 'delete'}]
+    });
+
+    await alert.present();
+    let result = await alert.onDidDismiss();
+    if(result.role == "delete") {
+      this.confirmDelete(item);
+    }
+  }
+
+  confirmDelete(item: any) {
     this.dataService.deleteExpense(item.id).subscribe(allowed => {
       if (allowed) {
         if(allowed.item == "Deleted Successfully") {

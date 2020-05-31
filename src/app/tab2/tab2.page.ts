@@ -132,7 +132,7 @@ export class Tab2Page {
       dataList.forEach(element => {
         let dataList = {
           Id: element.id,
-          Type: element.purchaseType,
+          Type: element.purchaseType == "income"? "Income": "Expense",
           amount: element.entryAmount.toFixed(2),
           desc: element.description,
           date: this.datepipe.transform(new Date(element.purchaseDate), "dd-MMM"),

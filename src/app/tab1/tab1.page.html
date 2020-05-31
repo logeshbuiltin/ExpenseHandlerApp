@@ -28,15 +28,15 @@
     <ion-tabs>
       <!-- Tab bar -->
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="savings">
+        <ion-tab-button (click)="expenseType('t1')">
           <ion-text color="dark">Savings</ion-text>
           <ion-text class="margin-text" color="dark"><strong>{{totalSavings | number: "1.2-2"}}</strong></ion-text>
         </ion-tab-button>
-        <ion-tab-button tab="expense">
+        <ion-tab-button (click)="expenseType('t2')">
           <ion-text color="danger">Expense</ion-text>
           <ion-text class="margin-text" color="danger"><strong>{{totalExpense | number: "1.2-2"}}</strong></ion-text>
         </ion-tab-button>
-        <ion-tab-button tab="income">
+        <ion-tab-button (click)="expenseType('t3')">
           <ion-text>Income</ion-text>
           <ion-text class="margin-text"><strong>{{totalIncome | number: "1.2-2"}}</strong></ion-text>
         </ion-tab-button>
@@ -74,8 +74,8 @@
       <div *ngIf="item.type=='expense'">
         <ion-grid class="grid-size">
           <ion-row>
-            <ion-col size="1">
-              <ion-icon class="text-color-expense" name="reader-outline"></ion-icon>
+            <ion-col size="0.75">
+              <ion-icon class="text-color-expense" name="document-text-outline"></ion-icon>
             </ion-col>
             <ion-col size="2">
               <ion-text>{{ setDate(item.date) | date:"MMM dd" }}</ion-text>
@@ -83,10 +83,10 @@
             <ion-col size="3.80">
               <span><strong>{{ item.desc }}</strong></span>
             </ion-col>
-            <ion-col size="3">
+            <ion-col size="3.35">
               <span class="text-color-expense">{{ item.amount | currency:item.currCode }}</span>
             </ion-col>
-            <ion-col size="0.75">
+            <ion-col size="0.65">
               <ion-icon (click)="editItem(item)" color="dark" name="create-outline"></ion-icon>
             </ion-col>
             <ion-col size="0.75">
@@ -98,8 +98,8 @@
       <div *ngIf="item.type=='income'">
         <ion-grid class="grid-size">
           <ion-row>
-            <ion-col size="1">
-              <ion-icon class="text-color-income" name="logo-usd"></ion-icon>
+            <ion-col size="0.75">
+              <ion-icon class="text-color-income" name="reader-outline"></ion-icon>
             </ion-col>
             <ion-col size="2">
               <ion-text>{{ setDate(item.date) | date:"MMM dd" }}</ion-text>
@@ -107,10 +107,10 @@
             <ion-col size="3.80">
               <span><strong>{{ item.desc }}</strong></span>
             </ion-col>
-            <ion-col size="3">
-              <span class="text-color-income">{{ item.amount | currency:'INR'}}</span>
+            <ion-col size="3.35">
+              <span class="text-color-income">{{ item.amount | currency:item.currCode }}</span>
             </ion-col>
-            <ion-col size="0.75">
+            <ion-col size="0.65">
               <ion-icon (click)="editItem(item)" color="dark" name="create-outline"></ion-icon>
             </ion-col>
             <ion-col size="0.75">

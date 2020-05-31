@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController, LoadingController } from '@ionic/angular';
+import { NavController, AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AuthServiceProvider } from 'src/app/providers/auth-service';
 
@@ -11,6 +11,11 @@ import { AuthServiceProvider } from 'src/app/providers/auth-service';
 })
 export class RegisterPage implements OnInit {
 
+  phoneNo: number;
+  passwordMod: any;
+  cPasswordMod: any;
+  emailId: any;
+
   createSuccess = false;
 
   registerForm : FormGroup;
@@ -21,6 +26,7 @@ export class RegisterPage implements OnInit {
     private auth: AuthServiceProvider,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {
@@ -31,7 +37,7 @@ export class RegisterPage implements OnInit {
     this.registerForm = this.formBuilder.group({
       firstName : new FormControl('', Validators.compose([Validators.required])),        
       lastName : new FormControl('', Validators.compose([Validators.required])),
-      emailId : new FormControl('', Validators.compose([Validators.required])),
+      emailId : new FormControl('', Validators.compose([Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")])),
       password : new FormControl('', Validators.compose([Validators.required])),
       confirm_password : new FormControl('', Validators.compose([Validators.required])),
       phoneNo : new FormControl('', Validators.compose([Validators.required])),
@@ -73,6 +79,47 @@ export class RegisterPage implements OnInit {
     }
   }
 
+  checkValidity(type) {
+    if(type == "number") {
+      let digits = (""+this.phoneNo).split("");
+      if(digits.length > 13) {
+        this.registerForm.controls['phoneNo'].setErrors({'incorrect': true});
+        this.toastError("Error", "Phone number can not exceed more than 13 characters");
+      } else {
+        this.registerForm.controls['phoneNo'].setErrors({'firstError': null});
+        this.registerForm.controls['phoneNo'].updateValueAndValidity();
+      }
+    } else if(type == "password") {
+      let digits = (""+this.passwordMod).split("");
+      if(digits.length < 8) {
+        this.registerForm.controls['password'].setErrors({'incorrect': true});
+        this.toastError("Error", "password should be more than 8 characters in length");
+      } else {
+        this.registerForm.controls['password'].setErrors({'firstError': null});
+        this.registerForm.controls['password'].updateValueAndValidity();
+      }
+    }
+  }
+
+  checkPassword() {
+    if(this.passwordMod != this.cPasswordMod) {
+      this.registerForm.controls['confirm_password'].setErrors({'incorrect': true});
+      this.toastError("Error", "confirm password does not match with actual password");
+    } else {
+      this.registerForm.controls['confirm_password'].setErrors({'firstError': null});
+      this.registerForm.controls['confirm_password'].updateValueAndValidity();
+    }
+  }
+
+  async toastError(type,text) {
+    const toast = await this.toastController.create({
+      header: type,
+      message: text,
+      duration: 3000,
+      position: 'bottom',
+    });
+    toast.present();
+  }
 
   async showPopup(title, text) {
     let alert = await this.alertCtrl.create({

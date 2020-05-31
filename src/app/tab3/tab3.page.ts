@@ -22,6 +22,8 @@ export class Tab3Page {
   currCode: any;
   confirmPass: any;
 
+  isformValid: boolean = true;
+
   dynamicButton: string = "Edit";
 
   //flags
@@ -78,6 +80,9 @@ export class Tab3Page {
   }
 
   async updateUser() {
+    if(this.password) {
+      this.confirmPass = this.password;
+    }
     const userData = {
       "userId": this.userId,
       "username": this.userName,
@@ -110,6 +115,29 @@ export class Tab3Page {
     await loading.present();
     const { role, data } = await loading.onDidDismiss();
     console.log('Loading dismissed!');
+  }
+
+  checkValidity(type) {
+    if(type == "number") {
+      let digits = (""+this.phoneNo).split("");
+      if(digits.length > 13) {
+        this.phoneNo = "";
+        this.toastError("Error", "Phone number can not exceed more than 13 characters");
+      } 
+    } else if(type == "password") {
+      let digits = (""+this.password).split("");
+      if(digits.length < 8) {
+        this.password = "";
+        this.toastError("Error", "password should be more than 8 characters in length");
+      }
+    } else if (type == "email") {
+      if(!this.emailId.match("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")) {
+        this.storage.get('emailId').then((val) => {
+          this.emailId = val;
+        });
+        this.toastError("Error", "Email-id format is invalid, replacing the old email");
+      }
+    }
   }
 
   logoutUser() {

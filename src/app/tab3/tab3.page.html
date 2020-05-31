@@ -23,15 +23,15 @@
   </ion-item>
 
   <ion-item>
-    <ion-input type="text" [(ngModel)]="emailId" [disabled]="isDisabled" placeholder="Email" name="emailId" required></ion-input>
+    <ion-input type="text" [(ngModel)]="emailId" (focusout)="checkValidity('email')" [disabled]="isDisabled" placeholder="Email" name="emailId" required></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-input type="password" [(ngModel)]="password" [disabled]="isDisabled" placeholder="Password" name="password" required></ion-input>
+    <ion-input type="password" [(ngModel)]="password" (focusout)="checkValidity('password')" [disabled]="isDisabled" placeholder="Password" name="password"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-input type="number" [(ngModel)]="phoneNo" [disabled]="isDisabled" placeholder="Phone No" name="phoneNo" required></ion-input>
+    <ion-input type="number" [(ngModel)]="phoneNo" (focusout)="checkValidity('number')" [disabled]="isDisabled" placeholder="Phone No" name="phoneNo" required></ion-input>
   </ion-item>
 
   <ion-item>

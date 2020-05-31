@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController, LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { DataServiceProvider } from 'src/app/providers/data-service';
 
@@ -42,7 +42,8 @@ export class ExpenseDialogPage implements OnInit {
     public modalCtrl: ModalController,
     private storage: Storage,
     private dataService: DataServiceProvider,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private loadingCtrl: LoadingController,
   ) { }
 
   ngOnInit() {
@@ -95,38 +96,56 @@ export class ExpenseDialogPage implements OnInit {
     }
   }
 
-  updateExpense(formData){
+  async updateExpense(formData){
     let expenseData = this.saveStructure(formData);
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+    });
     this.dataService.updateExpense(this.itemId, expenseData).subscribe(allowed => {
       if (allowed) {
         if(allowed.id) {
           this.toastError("Success","Expense/Income has been saved.");
+          loading.dismiss();
           this.dismiss();
         }
       } else {
+        loading.dismiss();
         this.toastError("Error","Unable to save record.");
       }
     },
     error => {
+      loading.dismiss();
       this.toastError("Error",error);
     });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 
-  saveExpense(formData) {
+  async saveExpense(formData) {
     let expenseData = this.saveStructure(formData);
+    const loading = await this.loadingCtrl.create({
+      message: 'Please wait...',
+    });
     this.dataService.saveExpense(this.userId, expenseData).subscribe(allowed => {
       if (allowed) {
         if(allowed.id) {
           this.toastError("Success","Expense/Income has been saved.");
+          loading.dismiss();
           this.dismiss();
         }
       } else {
+        loading.dismiss();
         this.toastError("Error","Unable to save record.");
       }
     },
     error => {
+      loading.dismiss();
       this.toastError("Error",error);
     });
+    await loading.present();
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 
   saveStructure(formData) {
