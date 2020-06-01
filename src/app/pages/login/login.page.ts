@@ -35,23 +35,14 @@ export class LoginPage {
   checkUserExists() {
     this.storage.get('username').then((val) => {
       this.username = val;
-    });
-    this.storage.get('password').then((val) => {
-      this.password = val;
-    });
-    if(this.username && this.password) {
-      this.auth.login(this.registerCredentials).subscribe(allowed => {
-        if (allowed) {
-          this.nav.navigateForward('/tabs');
-        } else {
-          this.showError("Invalid user has been detected.");
-          this.nav.navigateForward('/login');
+      this.storage.get('password').then((val) => {
+        this.password = val;
+        if(this.username && this.password) {
+          this.presentLoading();
+          this.userAuth(this.username, this.password);
         }
-      },
-      error => {
-        this.showError(error);
       });
-    }
+    });
   }
 
   public createAccount() {
@@ -68,8 +59,12 @@ export class LoginPage {
       return;
     }
     this.presentLoading()
-    this.registerCredentials.emailId = this.username;
-    this.registerCredentials.password = this.password;
+    this.userAuth(this.username, this.password);
+  }
+
+  userAuth(username: string, password: any) {
+    this.registerCredentials.emailId = username;
+    this.registerCredentials.password = password;
     this.auth.login(this.registerCredentials).subscribe(allowed => {
       if (allowed) {
         this.auth.storeUserData(this.registerCredentials);
