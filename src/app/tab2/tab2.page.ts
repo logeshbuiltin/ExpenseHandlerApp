@@ -67,11 +67,11 @@ export class Tab2Page {
         this.storage.set('monthlyJsonData', allowed);
         this.ionViewDidLoad(allowed);
       } else {
-        this.toastError("Unable to fetch records for the selected Month.");
+        this.toastError("Warning" ,"No records found for the selected Month.");
       }
     },
     error => {
-      this.toastError(error);
+      this.toastError("Error", error);
     });
   }
 
@@ -143,31 +143,14 @@ export class Tab2Page {
       this.rows = modifiedData.length > 0? modifiedData: [];
     } else {
       this.rows = [];
-      this.toastError("No records found for the selected Month.");
+      this.toastError("Warning", "No records found for the selected Month.");
     }
-      // this._HTTP
-      // .get<Config>('../../assets/data/technologies.json')
-      // .subscribe((data) =>
-      // {
-      //   data.items.forEach(element => {
-      //     let dataList = {
-      //       Id: element.id,
-      //       Type: element.purchaseType,
-      //       amount: element.entryAmount.toFixed(2),
-      //       desc: element.description,
-      //       date: this.datepipe.transform(new Date(element.purchaseDate), "dd-MMM"),
-      //       addedBy: element.addedBy
-      //     }
-      //     modifiedData.push(dataList);
-      //   });
-      //   this.rows = modifiedData.length > 0? modifiedData: [];
-      // });
 
    }
 
-   async toastError(text) {
+   async toastError(type, text) {
     const toast = await this.toastController.create({
-      header: 'Error ',
+      header: type,
       message: text,
       duration: 3000,
       position: 'top',

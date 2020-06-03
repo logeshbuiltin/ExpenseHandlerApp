@@ -102,7 +102,7 @@ export class Tab1Page {
             } 
             this.getExpenses(this.highTab);
           } else {
-            this.toastError("Error" ,"Unable to fetch records for the selected Month.");
+            this.toastError("Warning" ,"No records found for the current Month.");
           }
         },
         error => {

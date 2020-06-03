@@ -72,7 +72,7 @@ export class ExpenseDialogPage implements OnInit {
     });
     this.expenseForm = this.formBuilder.group({
       type : new FormControl('', Validators.compose([Validators.required])),        
-      desc : new FormControl('', Validators.compose([Validators.required])),
+      desc : new FormControl('', Validators.compose([Validators.required, Validators.maxLength(20)])),
       amount : new FormControl('', Validators.compose([Validators.required])),
       expDate : new FormControl('', Validators.compose([Validators.required])),
       currCode: new FormControl('', Validators.compose([Validators.required])),
@@ -157,7 +157,7 @@ export class ExpenseDialogPage implements OnInit {
       "purchaseDay": this.getDayDetail(formData.expDate),
       "addedBy": formData.addedBy,
       "currCode": formData.currCode,
-      "userId": 1
+      "userId": this.userId
     }
   }
 

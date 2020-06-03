@@ -142,7 +142,6 @@ export class Tab3Page {
 
   logoutUser() {
     this.storage.clear();
-
     this.nav.navigateForward('/login');
   }
 

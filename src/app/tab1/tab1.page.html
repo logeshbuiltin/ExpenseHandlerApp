@@ -74,22 +74,22 @@
       <div *ngIf="item.type=='expense'">
         <ion-grid class="grid-size">
           <ion-row>
-            <ion-col size="0.75">
+            <ion-col size="0.65">
               <ion-icon class="text-color-expense" name="document-text-outline"></ion-icon>
             </ion-col>
-            <ion-col size="2">
+            <ion-col size="1.80">
               <ion-text>{{ setDate(item.date) | date:"MMM dd" }}</ion-text>
             </ion-col>
-            <ion-col size="3.80">
+            <ion-col size="3.5">
               <span><strong>{{ item.desc }}</strong></span>
             </ion-col>
-            <ion-col size="3.35">
+            <ion-col size="3.2">
               <span class="text-color-expense">{{ item.amount | currency:item.currCode }}</span>
             </ion-col>
-            <ion-col size="0.65">
+            <ion-col size="0.70">
               <ion-icon (click)="editItem(item)" color="dark" name="create-outline"></ion-icon>
             </ion-col>
-            <ion-col size="0.75">
+            <ion-col size="0.70">
               <ion-icon (click)="deleteItem(item)" color="danger" name="trash-outline"></ion-icon>
             </ion-col>
           </ion-row>
@@ -98,22 +98,22 @@
       <div *ngIf="item.type=='income'">
         <ion-grid class="grid-size">
           <ion-row>
-            <ion-col size="0.75">
+            <ion-col size="0.65">
               <ion-icon class="text-color-income" name="reader-outline"></ion-icon>
             </ion-col>
-            <ion-col size="2">
+            <ion-col size="1.80">
               <ion-text>{{ setDate(item.date) | date:"MMM dd" }}</ion-text>
             </ion-col>
-            <ion-col size="3.80">
+            <ion-col size="3.5">
               <span><strong>{{ item.desc }}</strong></span>
             </ion-col>
-            <ion-col size="3.35">
+            <ion-col size="3.2">
               <span class="text-color-income">{{ item.amount | currency:item.currCode }}</span>
             </ion-col>
-            <ion-col size="0.65">
+            <ion-col size="0.70">
               <ion-icon (click)="editItem(item)" color="dark" name="create-outline"></ion-icon>
             </ion-col>
-            <ion-col size="0.75">
+            <ion-col size="0.70">
               <ion-icon (click)="deleteItem(item)" color="danger" name="trash-outline"></ion-icon>
             </ion-col>
           </ion-row>
