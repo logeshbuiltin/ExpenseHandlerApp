@@ -16,7 +16,8 @@ export class ExpenseDialogPage implements OnInit {
   @Input() expenseData: any;
   @Input() opType: string;
 
-  titleName: string = "Budget Entry Dialog";
+  titleName: string = "Budget Entry";
+  dateTitle: string = "Expense Date:";
 
   expMinDate: string;
   expMaxDate: string;
@@ -29,10 +30,12 @@ export class ExpenseDialogPage implements OnInit {
   expDate: any;
   itemId: any;
   currCode: any;
-
   userId: any;
 
   dynamicSave: string = "Save";
+
+  //flags
+  isDisabled: boolean = false;
 
   expenseForm : FormGroup;
 
@@ -120,6 +123,14 @@ export class ExpenseDialogPage implements OnInit {
     await loading.present();
     const { role, data } = await loading.onDidDismiss();
     console.log('Loading dismissed!');
+  }
+
+  setTitle(event) {
+    if(event.detail.value == "income") {
+      this.dateTitle = "Income Date:";
+    } else {
+      this.dateTitle = "Expense Date:";
+    }
   }
 
   async saveExpense(formData) {

@@ -15,7 +15,7 @@
       <ion-col>
         <ion-item id="rounded">
           <ion-label>Type: </ion-label>
-          <ion-select [(ngModel)]="type" formControlName="type" interface="popover">
+          <ion-select (ionChange)="setTitle($event)" [(ngModel)]="type" formControlName="type" interface="popover">
             <ion-select-option value="expense">Expense</ion-select-option>
             <ion-select-option value="income">Income</ion-select-option>
           </ion-select>
@@ -36,7 +36,7 @@
         </ion-item>
 
         <ion-item id="rounded">
-          <ion-label>Expense Date: </ion-label>
+          <ion-label>{{dateTitle}}</ion-label>
           <ion-datetime formControlName="expDate" [(ngModel)]="expDate" displayFormat="DD/MM/YYYY"></ion-datetime>
         </ion-item>
       </ion-col>
