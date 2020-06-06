@@ -26,12 +26,17 @@
     color: grey;
 }
 
+.datatable-header-cell
+{
+   display: flex !important;
+   align-items: center !important;
+}
 
-:host {
-    display: block;
-    width: 100%;
-    height: 100%;
-    .ngx-datatable {
-      height: 100vh;
-    }
-  }
+.alert-wrapper.sc-ion-alert-md {
+    border-radius: 14px !important;
+    background: url("/assets/img/img/bg.jpg") no-repeat;
+}
+
+.text-color {
+    color: black;
+}

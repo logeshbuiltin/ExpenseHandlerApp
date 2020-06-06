@@ -50,6 +50,7 @@ export class AuthServiceProvider {
         .subscribe( data => {
           if (data.access_token) {
             this.token = 'Bearer ' + data.access_token;
+            this.storage.set('access_token', data.access_token);
             this.access = true;
           } else {
             this.access = false;

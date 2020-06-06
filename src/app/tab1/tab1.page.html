@@ -6,7 +6,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" (swiperight)="switchTab2()">
+<ion-content #pageTop [fullscreen]="true" (swiperight)="switchTab2()">
   <!-- fab placed to the top end -->
   <ion-fab vertical="top" horizontal="end" slot="fixed">
     <ion-fab-button (click)="presentModal()">
@@ -69,57 +69,59 @@
     </ion-tabs>
   </ion-item>
 
-  <ion-virtual-scroll class="scroll-style" [items]="bothEandIList">
-    <ion-item class="ion-item-margin" *virtualItem="let item">
-      <div *ngIf="item.type=='expense'">
-        <ion-grid class="grid-size">
-          <ion-row>
-            <ion-col size="0.65">
-              <ion-icon class="text-color-expense" name="document-text-outline"></ion-icon>
-            </ion-col>
-            <ion-col size="1.80">
-              <ion-text>{{ setDate(item.date) | date:"MMM dd" }}</ion-text>
-            </ion-col>
-            <ion-col size="3.5">
-              <span><strong>{{ item.desc }}</strong></span>
-            </ion-col>
-            <ion-col size="3.2">
-              <span class="text-color-expense">{{ item.amount | currency:item.currCode }}</span>
-            </ion-col>
-            <ion-col size="0.70">
-              <ion-icon (click)="editItem(item)" color="dark" name="create-outline"></ion-icon>
-            </ion-col>
-            <ion-col size="0.70">
-              <ion-icon (click)="deleteItem(item)" color="danger" name="trash-outline"></ion-icon>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-      <div *ngIf="item.type=='income'">
-        <ion-grid class="grid-size">
-          <ion-row>
-            <ion-col size="0.65">
-              <ion-icon class="text-color-income" name="reader-outline"></ion-icon>
-            </ion-col>
-            <ion-col size="1.80">
-              <ion-text>{{ setDate(item.date) | date:"MMM dd" }}</ion-text>
-            </ion-col>
-            <ion-col size="3.5">
-              <span><strong>{{ item.desc }}</strong></span>
-            </ion-col>
-            <ion-col size="3.2">
-              <span class="text-color-income">{{ item.amount | currency:item.currCode }}</span>
-            </ion-col>
-            <ion-col size="0.70">
-              <ion-icon (click)="editItem(item)" color="dark" name="create-outline"></ion-icon>
-            </ion-col>
-            <ion-col size="0.70">
-              <ion-icon (click)="deleteItem(item)" color="danger" name="trash-outline"></ion-icon>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-    </ion-item>
-  </ion-virtual-scroll>
+  <ion-list class="list-style-scroll">
+    <ion-virtual-scroll class="scroll-style" [items]="bothEandIList">
+      <ion-item class="ion-item-margin" *virtualItem="let item">
+        <div *ngIf="item.type=='expense'">
+          <ion-grid class="grid-size">
+            <ion-row>
+              <ion-col size="auto">
+                <ion-icon class="text-color-expense" name="document-text-outline"></ion-icon>
+              </ion-col>
+              <ion-col size="auto">
+                <ion-text>{{ setDate(item.date) | date:"MMM dd" }}</ion-text>
+              </ion-col>
+              <ion-col size="3.5">
+                <span><strong>{{ item.desc }}</strong></span>
+              </ion-col>
+              <ion-col size="3">
+                <span class="text-color-expense">{{ item.amount | currency:item.currCode }}</span>
+              </ion-col>
+              <ion-col size="auto">
+                <ion-icon (click)="editItem(item)" color="dark" name="create-outline"></ion-icon>
+              </ion-col>
+              <ion-col size="auto">
+                <ion-icon (click)="deleteItem(item)" color="danger" name="trash-outline"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <div *ngIf="item.type=='income'">
+          <ion-grid class="grid-size">
+            <ion-row>
+              <ion-col size="auto">
+                <ion-icon class="text-color-income" name="reader-outline"></ion-icon>
+              </ion-col>
+              <ion-col size="auto">
+                <ion-text>{{ setDate(item.date) | date:"MMM dd" }}</ion-text>
+              </ion-col>
+              <ion-col size="3.5">
+                <span><strong>{{ item.desc }}</strong></span>
+              </ion-col>
+              <ion-col size="3">
+                <span class="text-color-income">{{ item.amount | currency:item.currCode }}</span>
+              </ion-col>
+              <ion-col size="auto">
+                <ion-icon (click)="editItem(item)" color="dark" name="create-outline"></ion-icon>
+              </ion-col>
+              <ion-col size="auto">
+                <ion-icon (click)="deleteItem(item)" color="danger" name="trash-outline"></ion-icon>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </ion-item>
+    </ion-virtual-scroll>
+  </ion-list>
 
 </ion-content>

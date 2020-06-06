@@ -21,8 +21,8 @@
 
 
 .scroll-style {
-    height: 40% !important;
     overflow: scroll;
+    width: 100% !important;
 }
 
 .text-color-expense {
@@ -36,7 +36,7 @@
 }
 
 .grid-size {
-    width: 400px !important;
+    width: 100vw !important;
 }
 
 .margin-text {
@@ -44,5 +44,13 @@
 }
 
 .ion-item-margin {
-    margin-right: 5px !important;
+    width: 100%;
+}
+
+.list-style-scroll {
+    height: fit-content;
+    overflow: scroll;
+    display: flow-root;
+    flex-flow: column nowrap;
+    width: 100%;
 }

@@ -5,6 +5,7 @@ import { ExpenseDialogPage } from '../modals/expense-dialog/expense-dialog.page'
 import { Storage } from '@ionic/storage';
 import { DatePipe } from '@angular/common';
 import { DataServiceProvider } from '../providers/data-service';
+import { IonContent } from '@ionic/angular';
 
 
 @Component({
@@ -14,6 +15,8 @@ import { DataServiceProvider } from '../providers/data-service';
   providers: [DatePipe, DataServiceProvider]
 })
 export class Tab1Page {
+
+  @ViewChild(IonContent) content: IonContent;
 
   expenseData: any[] = [];
   incomeData: any[] = [];
@@ -58,6 +61,7 @@ export class Tab1Page {
 
 
   ionViewDidEnter(): void {
+    this.pageScroller();
     this.getUserDetails();
     this.daysData = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   }
@@ -384,6 +388,14 @@ export class Tab1Page {
 
   switchTab2(){
     this.nav.navigateForward("/tab2");
+  }
+
+  /**
+   * Method to scroll to top
+   */
+  public pageScroller(){
+    //scroll to page top
+    this.content.scrollToTop();
   }
 
   async toastError(type,text) {

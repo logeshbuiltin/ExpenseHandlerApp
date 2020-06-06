@@ -1,8 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { NavController, ToastController } from '@ionic/angular';
+import { NavController, ToastController, AlertController } from '@ionic/angular';
 import { DatePipe } from '@angular/common';
 import { DataServiceProvider } from '../providers/data-service';
 import { Storage } from '@ionic/storage';
+import { currency_symbols } from 'src/assets/properties';
 
 export interface Config {
 	items: any;
@@ -21,6 +22,9 @@ export class Tab2Page {
   minDate: any;
   maxDate: any;
   userId: any;
+  selected: any;
+
+  private rowAlert: any;
 
   constructor(
     public navCtrl 	: NavController,
@@ -28,16 +32,17 @@ export class Tab2Page {
     private dataService: DataServiceProvider,
     private storage: Storage,
     private toastController: ToastController,
+    public alertContrl: AlertController,
     )
   {   
     // Define the columns for the data table
     // (based off the names of the keys in the JSON file)   
     this.columns = [
-      { prop: 'Type' },
-      { name: 'Amount' },
-      { name: 'Desc' },
-      { name: 'Date' },
-      { name: 'AddedBy' }
+      { name: 'Type', prop: 'type'},
+      { name: 'Amount', prop: 'amount'},
+      { name: 'Desc', prop: 'desc'},
+      { name: 'Date', prop: 'date'},
+      { name: 'User', prop: 'user'}
     ];
   }
 
@@ -132,11 +137,12 @@ export class Tab2Page {
       dataList.forEach(element => {
         let dataList = {
           Id: element.id,
-          Type: element.purchaseType == "income"? "Income": "Expense",
-          amount: element.entryAmount.toFixed(2),
+          type: element.purchaseType == "income"? "Income": "Expense",
+          amount: (currency_symbols[element.currCode]!==undefined? currency_symbols[element.currCode]: element.currCode) + 
+                  element.entryAmount.toFixed(2),
           desc: element.description,
           date: this.datepipe.transform(new Date(element.purchaseDate), "dd-MMM"),
-          addedBy: element.addedBy
+          user: element.addedBy
         }
         modifiedData.push(dataList);
       });
@@ -146,6 +152,30 @@ export class Tab2Page {
       this.toastError("Warning", "No records found for the selected Month.");
     }
 
+   }
+
+   async rowSelected(event){
+    if (event.type == 'click' && event.cellIndex != 0) {
+      let dataVal = event.row; 
+      this.selected = "<p class='text-color'><strong>Type: </strong>" +dataVal.type+
+                      "<br><strong>Amount: </strong>"+dataVal.amount+
+                      "<br><strong>Desc: </strong>"+dataVal.desc+ 
+                      "<br><strong>Date: </strong>"+dataVal.date+
+                      "<br><strong>Added by: </strong>"+dataVal.user+"</p>"
+      this.rowAlert = await this.alertContrl.create({
+        cssClass: 'my-custom-class',
+        header: 'Selected row details',
+        message: this.selected,
+        buttons: [
+          {
+              text: 'Dismiss',
+              role: 'cancel',
+          }
+        ],
+      });
+
+      await this.rowAlert.present();
+    }
    }
 
    async toastError(type, text) {

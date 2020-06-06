@@ -14,7 +14,7 @@
     <ion-icon class="cal-icon-style" name="calendar-outline"></ion-icon>
   </ion-item>
   
-  <div>
+  <div style="width: 100vw;">
 
   	<!-- 
   	   Embed the ngx-datatable component with following property bindings/values:
@@ -32,15 +32,24 @@
   	-->
      <ngx-datatable 
        class="material"
+       style="overflow-y:scroll"
        [sortType]="'multi'"     
        [headerHeight]="50" 
        [footerHeight]="50"
-       [rowHeight]="45"
+       [rowHeight]="50"
        [rows]="rows" 
        [columns]="columns" 
        [columnMode]="'force'"
+       (activate)="rowSelected($event)"
+       [loadingIndicator]='loadingIndicator'
        [limit]="10">
+       <ngx-datatable-column name="Type"></ngx-datatable-column>
+        <ngx-datatable-column name="Amount"></ngx-datatable-column>
+        <ngx-datatable-column name="Desc"></ngx-datatable-column>
+        <ngx-datatable-column name="Date"></ngx-datatable-column>
+        <ngx-datatable-column name="User"></ngx-datatable-column>
      </ngx-datatable>
+     
   </div>
 
 
